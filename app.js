@@ -112,11 +112,12 @@ async function handleAddRecipe(e) {
         steps: formData.get('steps') ? formData.get('steps').split('\n').map(item => item.trim()) : [],
     };
 
-    // Validate the newRecipe object
     if (!newRecipe.title || !newRecipe.description || newRecipe.ingredients.length === 0 || newRecipe.steps.length === 0) {
         alert('Please fill in all required fields.');
         return;
     }
+
+    showLoadingFeedback(); // Show loading feedback before sending the request
 
     try {
         const response = await fetch(`${API_BASE_URL}/recipes`, {
@@ -132,11 +133,22 @@ async function handleAddRecipe(e) {
         }
 
         recipeForm.reset();
+        hideLoadingFeedback(); // Hide loading feedback after receiving the response
         showRecipesList(e);
     } catch (error) {
         console.error('Error:', error);
+        hideLoadingFeedback(); // Hide loading feedback if there's an error
         alert('Failed to add recipe. Please try again.');
     }
+}
+
+// Add these new functions at the beginning of the file
+function showLoadingFeedback() {
+    document.getElementById('loading-feedback').style.display = 'block';
+}
+
+function hideLoadingFeedback() {
+    document.getElementById('loading-feedback').style.display = 'none';
 }
 
 // Initial load
