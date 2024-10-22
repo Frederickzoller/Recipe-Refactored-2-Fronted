@@ -110,11 +110,10 @@ async function handleAddRecipe(e) {
         description: formData.get('description'),
         ingredients: formData.get('ingredients') ? formData.get('ingredients').split(',').map(item => item.trim()) : [],
         steps: formData.get('steps') ? formData.get('steps').split('\n').map(item => item.trim()) : [],
-        author_id: parseInt(formData.get('author-id')) || null
     };
 
     // Validate the newRecipe object
-    if (!newRecipe.title || !newRecipe.description || newRecipe.ingredients.length === 0 || newRecipe.steps.length === 0 || !newRecipe.author_id) {
+    if (!newRecipe.title || !newRecipe.description || newRecipe.ingredients.length === 0 || newRecipe.steps.length === 0) {
         alert('Please fill in all required fields.');
         return;
     }
